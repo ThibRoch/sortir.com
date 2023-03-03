@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+<div>
+    {{ form_row(form.campus) }}
+</div>
+<div>
+    {{ form_row(form.nameTrip) }}
+</div>
+<div>
+    {{ form_row(form.startDateTime) }}
+    {{ form_row(form.deadline) }}
+</div>    
+<div>
+    {{ form_row(form.tripsOrganized) }}
+    {{ form_row(form.tripsRegisted) }}
+    {{ form_row(form.tripsNotRegisted) }}
+    {{ form_row(form.tripsPassed) }}
+</div>
+
+
+<button type="submit"> Search !</button>
+{{ form_end(form) }}
+
+
+

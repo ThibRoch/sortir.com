@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>{{ app.user.firstname }} {{ app.user.lastname }}</h2>
+
+    <div class="blockProfile">
+    <table>
+        <tr>
+            <td><span>Nickname</span> {{ user.pseudo }}</td>
+        </tr>
+        <tr>
+            <td><span>Firstname</span> {{ user.firstname }}</td>
+        </tr>
+        <tr>
+            <td><span>Lastname</span> {{ user.lastname }}</td>
+        </tr>
+        <tr>
+            <td><span>Email</span> {{ user.email }}</td>
+        </tr>
+        <tr>
+            <td><span>Phone</span> {{ user.phone }}</td>
+        </tr>
+        <tr>
+            <td><span>Campus</span> {{ user.campus }}</td>
+        </tr>
+    </table>
+        {% if is_granted("PROFILE_EDIT", user) %}
+        <div class="edit">
+           <a href="{{ path('users_editProfile', {'id': user.id}) }}" title="Edit your profile">Edit</a>
+           <a href="{{ path('users_editPassword', {'id': user.id}) }}" title="Change your Password" >Change Password</a>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block title %} My Profile {{ parent() }} {% endblock %}

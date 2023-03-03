@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello to your new trip !{% endblock %}
+
+{% block body %}
+    <h1> All the trip ! </h1>
+
+    <div id="info">
+        <h3> Date : {{ "now"|date('d/m/Y')}}</h3>
+        <h3> User : {{ app.user.firstname }}</h3>
+    </div>
+
+    <div id ="filters" class="container">
+        <h4> Filter the trips :</h4>
+            <div class="row">
+                {% include 'filters/index.html.twig' with {form: filterform } only %} 
+            </div>
+    </div>
+
+<div id = "allTrip">
+    <table>
+        <thead>
+            <tr>
+                <td>Name Trip</td>
+                <td>Start dateTime</td>
+                <td>Deadline</td>
+                <td>Max Registration</td>
+                <td>Status</td>
+                <td>Creator</td>
+                <td>Action </td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for trip in trips %}
+            <tr>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.startDateTime | date("d/m/Y") }}</td>
+                <td>{{ trip.deadline |date("d/m/Y") }}</td>
+                <td>{{ trip.maxRegistration }}</td>
+                <td>{{ trip.status }}</td>
+                <td><a href="{{ path('users_profile', {'id': trip.creator.id }) }}">{{ trip.creator.pseudo }}</a></td>
+            
+                <td>
+                {% if is_granted("POST_EDIT",trip)%}
+                    <a href="{{ path('trip_editTrip',{ 'id' : trip.id }) }}">Modifier</a>
+                {% endif %}
+                {% if is_granted("POST_VIEW",trip)%}
+                    <a href="{{ path('trip_showTrip',{ 'id' : trip.id }) }}">Afficher</a>
+                {% endif %}
+                {% if is_granted("POST_DELETE",trip)%}
+                    <a href="{{ path('trip_deleteTrip',{ 'id' : trip.id }) }}">Supprimer</a>
+                {% endif %}
+                {% if is_granted("POST_REG",trip)%}
+                <a href="{{ path('trip_register',{ 'id' : trip.id }) }}">S'inscrire</a>
+                {% endif %}
+                {% if is_granted("POST_REC",trip)%}
+                <a href="{{ path('trip_renounceTrip',{ 'id' : trip.id }) }}">Se Désinster</a>
+                {% endif %}
+               
+                    
+                </td>
+                
+            </tr>      
+        {% endfor %}
+        
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
